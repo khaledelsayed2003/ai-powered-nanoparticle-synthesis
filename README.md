@@ -1,4 +1,4 @@
-# 🧠 AI-Powered Nanoparticle Synthesis & Analysis  
+# 🧠 AI-Powered Nanoparticle Synthesis & Analysis..
 ### A Collaborative Project between the Biomedical and Software Engineering Departments
 ### A sustainable approach to nanotechnology using green synthesis and artificial intelligence.
 
