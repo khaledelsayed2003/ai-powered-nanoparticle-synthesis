@@ -1,13 +1,20 @@
-# Ignore the virtual environment
+@"
+# Virtual env
 env/
 
-# Ignore Python cache folders
+# Python caches
 __pycache__/
+*.pyc
 
-# Ignore generated data and artifacts
+# Editor & logs
+.vscode/
+*.log
+
+# Generated data & models
 data/interim/
 data/processed/
 ml/artifacts/
 
-# Ignore VS Code config
-.vscode/
+# Django media (uploads)
+web/backend/media/
+"@ > .gitignore
