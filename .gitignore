@@ -1,0 +1,13 @@
+# Ignore the virtual environment
+env/
+
+# Ignore Python cache folders
+__pycache__/
+
+# Ignore generated data and artifacts
+data/interim/
+data/processed/
+ml/artifacts/
+
+# Ignore VS Code config
+.vscode/
