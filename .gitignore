@@ -1,6 +1,6 @@
 @"
 # Virtual env
-env/
+env311/
 
 # Python caches
 __pycache__/
