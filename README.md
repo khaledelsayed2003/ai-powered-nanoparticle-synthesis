@@ -1,119 +1,148 @@
-# 🧠 AI-Powered Nanoparticle Synthesis & Analysis..
-### A Collaborative Project between the Biomedical and Software Engineering Departments
-### A sustainable approach to nanotechnology using green synthesis and artificial intelligence.
+# 🧠 AI-Powered Nanoparticle Synthesis & Analysis
+### A Collaborative Project between the Biomedical and Software Engineering Departments  
+### A Sustainable Approach to Nanotechnology using Green Synthesis and Artificial Intelligence  
 
 ---
 
 ## 🌿 Overview
-This capstone project brings together **green nanotechnology** and **artificial intelligence** to create a complete system that can both **synthesize** and **analyze nanoparticles**.
+This Capstone project integrates **green nanotechnology** with **artificial intelligence** to create a complete system that can both **synthesize** and **analyze nanoparticles**.
 
-- The **Biomedical Engineering Department** focuses on **green synthesis** of nanoparticles and generating **SEM images** for analysis.  
-- The **Software Engineering Department** develops **AI-powered tools** that automatically analyze these images to identify nanoparticle **shape**, **size**, and **distribution**.
+- The **Biomedical Engineering Department** conducts **green synthesis** of nanoparticles and generates **SEM (Scanning Electron Microscope)** images.  
+- The **Software Engineering Department** develops an **AI-driven system** to automatically analyze these images and classify nanoparticles by **shape**, **size**, and **distribution**.
 
-Together, these two components demonstrate how **AI can accelerate materials research** and **sustainable nanotechnology**.
+Together, the two departments demonstrate how **AI accelerates materials research** and supports **sustainable nanotechnology**.
 
 ---
 
-## 🧩 Project Structure
+## 🧩 Project Architecture
+
 ```bash
 ai-powered-nanoparticle-synthesis/
-├─ green-nanoparticle-synthesis/
-│   ├─ SEM_Images/
-│   ├─ labels.csv
-│   └─ synthesis_protocols/
+├─ data/ # BME + Kaggle SEM images & labels
+│ ├─ BME/SEM_Images/
+│ ├─ KAGGLE/SEM_Images/
+│ ├─ PROCESSED/
+│ └─ labels.csv
 │
-├─ nanoparticle-ai-analysis/
-│   ├─ ml/
-│   ├─ api/
-│   ├─ ui/
-│   ├─ data/
-│   └─ README.md
+├─ ml/ # Machine Learning (TensorFlow CNN)
+│ ├─ preprocess.py
+│ ├─ dataset.py
+│ ├─ model_cnn.py
+│ ├─ train.py
+│ ├─ infer.py
+│ └─ config.yaml
 │
-└─ docs/
-    ├─ project_charter.pdf
-    ├─ milestones.md
-    └─ integration_plan.md
+├─ backend/ # Django REST API
+│ ├─ manage.py
+│ ├─ api/
+│ └─ media/
+│
+├─ web/ # React Frontend (UI)
+│ ├─ src/
+│ └─ package.json
+│
+├─ ops/ # Policies & documentation
+│ ├─ data_policy.md
+│ ├─ label_guidelines.md
+│ └─ kaggle_checklist.md
+│
+├─ README.md
+└─ .gitignore
+
+
+---
 
 ## 🎯 Objectives
-- ✅ Develop an eco-friendly **green synthesis method** for nanoparticles  
-- ✅ Build an **AI-based system** to analyze SEM images and classify nanoparticles  
-- ✅ Achieve **≥85% accuracy** for automated image analysis  
-- ✅ Create a **fast, user-friendly interface** for visualization and testing  
-- ✅ Integrate both departments’ work into one cohesive scientific workflow  
+- ✅ Automate the **classification of nanoparticles** in SEM images.  
+- ✅ Predict **shape (spherical / rod / cubic)**, **size (10–50 nm / 50–100 nm)**, and **distribution (uniform / clustered)**.  
+- ✅ Achieve **≥ 85 % classification accuracy** using a CNN with data augmentation.  
+- ✅ Provide a **user-friendly web interface** for uploads, predictions, and history tracking.  
+- ✅ Ensure **GDPR / KVKK compliance** for all image data.
 
 ---
 
-## ⚗️ Subprojects
+## ⚗️ Subsystems
 
-### 🧪 **Biomedical Engineering: Green Nanoparticle Synthesis**
-- Synthesize nanoparticles using **plant-based (green) extracts**
-- Capture **SEM images** of different nanoparticle batches
-- Label data for AI model training (shape, size, distribution)
+### 🧪 Biomedical Engineering – Green Synthesis
+- Perform **plant-based (eco-friendly)** nanoparticle synthesis.  
+- Capture **SEM images** of synthesized nanoparticles.  
+- Provide labeled datasets (`shape`, `size`, `distribution`) for AI model training.  
 
-📁 Folder: [`green-nanoparticle-synthesis/`](green-nanoparticle-synthesis/)
-
----
-
-### 💻 **Software Engineering: AI-Based Nanoparticle Analysis**
-- Build **machine learning models** for nanoparticle classification  
-- Develop a **FastAPI backend** and **Gradio-based user interface**  
-- Handle dataset preprocessing, training, and real-time inference  
-
-📁 Folder: [`nanoparticle-ai-analysis/`](nanoparticle-ai-analysis/)
+📁 Folder: `data/BME/`
 
 ---
 
-## 🔗 Integration Plan
-1. Biomedical team produces labeled SEM image datasets.  
-2. Software team trains AI models using this dataset.  
-3. The integrated system allows users to **upload SEM images** and **receive instant AI predictions**.  
-4. Final deliverable: a working prototype and technical report demonstrating full collaboration.
+### 💻 Software Engineering – AI & Web Development
+- Implement **image preprocessing, data augmentation, and CNN training** in TensorFlow.  
+- Build a **Django REST API** for image upload and real-time model inference.  
+- Develop a **React-based UI** for user login, upload, results visualization, and history management.  
+- Integrate a **MySQL / SQLite database** for users, results, and logs.
+
+📁 Folders: `ml/`, `backend/`, `web/`
+
+---
+
+## 🔗 Integration Flow
+1. Biomedical team provides labeled SEM images.  
+2. Software team preprocesses and trains the CNN model.  
+3. The trained model (`cnn_model.h5`) is integrated into Django for inference.  
+4. The user uploads SEM images through the React interface.  
+5. The backend returns **AI predictions** for visualization and storage.  
 
 ---
 
 ## 🧠 Technologies Used
-| Biomedical | Software |
-|-------------|-----------|
-| Green Synthesis | Python, PyTorch |
-| SEM Imaging | FastAPI, Gradio |
-| UV-Vis Spectroscopy | NumPy, Pandas |
-| Data Labeling | OpenCV, scikit-learn |
-| Quality Control | MLflow, Matplotlib |
+| Category | Tools / Frameworks |
+|-----------|--------------------|
+| Machine Learning | TensorFlow 2.16, scikit-learn, OpenCV, NumPy, Pandas |
+| Backend | Django 5.1, Django REST Framework, python-dotenv, CORS Headers |
+| Frontend | React + Vite, Axios, TypeScript |
+| Database | SQLite (dev) / MySQL (production) |
+| DevOps & Docs | Git, VS Code, YAML configs, Markdown |
+
+---
+
+## 🧪 System Workflow
+1. **Image Preprocessing** – resize 128×128, grayscale, CLAHE contrast, Gaussian blur.  
+2. **Data Augmentation** – rotation ±15°, horizontal flip, zoom, translation.  
+3. **CNN Training** – 5-layer conv-BN-ReLU architecture; early-stopping on validation accuracy.  
+4. **Inference API** – loads model once, predicts shape/size/distribution.  
+5. **Frontend** – user uploads → sees instant results → stored in history.
 
 ---
 
 ## 📅 Timeline
 | Phase | Description | Owner |
-|-------|--------------|-------|
-| Phase 1 | Green synthesis setup & data collection | Biomedical |
-| Phase 2 | Dataset preparation & labeling | Biomedical |
-| Phase 3 | AI model development | Software |
-| Phase 4 | Integration & testing | Both |
-| Phase 5 | Final documentation & presentation | Both |
+|--------|--------------|-------|
+| Phase 1 | Dataset collection & labeling | Biomedical |
+| Phase 2 | Data preprocessing & augmentation | Software |
+| Phase 3 | CNN model development | Software |
+| Phase 4 | Web & API integration | Software |
+| Phase 5 | Validation & presentation | Both |
 
 ---
 
 ## 📁 Documentation
-All shared project documentation, meeting notes, and progress reports are located in:
-/docs/
-
+All reports, figures, and deliverables are in the `/ops/` and `/docs/` folders.
 
 ---
 
-## 👥 Team & Collaboration
+## 👥 Team Roles
 | Role | Department | Responsibility |
 |------|-------------|----------------|
-| Project Lead | Biomedical | Synthesis protocol & validation |
-| AI Developer | Software | Model training & deployment |
-| UI Developer | Software | Interface design |
-| Data Analyst | Biomedical | Image labeling & QC |
+| Project Lead | Biomedical | Synthesis & dataset supervision |
+| AI Developer | Software | CNN design & training |
+| Backend Developer | Software | Django REST API integration |
+| Frontend Developer | Software | React UI design |
+| Data Analyst | Biomedical | Image labeling & validation |
 
 ---
 
 ## 📄 License
-This project is for educational and research purposes only.  
-© 2025 – Biomedical & Software Engineering Departments.
+This project is for academic and research purposes only.  
+© 2025 – Biomedical & Software Engineering Departments, Istanbul Gelisim University.
 
 ---
 
 > _“Where sustainable science meets intelligent technology.”_
+

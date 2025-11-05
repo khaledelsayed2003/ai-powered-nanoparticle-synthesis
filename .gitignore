@@ -1,20 +1,24 @@
 @"
-# Virtual env
+# Python
+env/
 env311/
-
-# Python caches
 __pycache__/
-*.pyc
+*.py[cod]
+*.pyo
+*.pyd
 
-# Editor & logs
+# Data & models
+/model/
+*.h5
+*.keras
+data/PROCESSED/
+backend/media/
+
+# OS/Editor
+.DS_Store
 .vscode/
-*.log
 
-# Generated data & models
-data/interim/
-data/processed/
-ml/artifacts/
-
-# Django media (uploads)
-web/backend/media/
-"@ > .gitignore
+# Node
+web/node_modules/
+dist/
+"@ | Out-File -Encoding utf8 .\.gitignore
