@@ -140,7 +140,7 @@ All reports, figures, and deliverables are in the `/ops/` and `/docs/` folders.
 
 ## 📄 License
 This project is for academic and research purposes only.  
-© 2025 – Biomedical & Software Engineering Departments, Istanbul Gelisim University.
+© 2025 – Biomedical & Software Engineering Departments, Bahcesehir University.
 
 ---
 
