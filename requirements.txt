@@ -1,0 +1,19 @@
+# Core ML libraries
+torch
+torchvision
+numpy
+pandas
+scikit-learn
+matplotlib
+
+# Jupyter for experimentation
+jupyter
+
+# Backend
+django
+djangorestframework
+pillow   # Required for handling image uploads in Django
+
+# Optional utilities (safe to include)
+tqdm
+python-multipart
