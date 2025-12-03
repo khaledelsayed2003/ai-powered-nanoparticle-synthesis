@@ -7,8 +7,8 @@ from datasets import SemMeanSizeDataset, get_default_transforms
 
 
 def create_dataloaders(
-    csv_path: Path("data/raw/sem_mean_sizes.csv"),
-    images_dir: Path("data/raw/images"),
+    csv_path: Path = Path("data/raw/sem_mean_sizes.csv"),
+    images_dir: Path = Path("data/raw/images"),
     batch_size: int = 4,
     val_ratio: float = 0.15,
     test_ratio: float = 0.15,
