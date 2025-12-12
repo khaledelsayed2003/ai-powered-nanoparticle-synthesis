@@ -19,3 +19,16 @@ django-cors-headers # Added for CORS configuration
 # Optional utilities (safe to include)
 tqdm
 python-multipart
+
+# Frontend note (install via npm/yarn, not pip):
+# Run `npm install` inside src/frontend to install:
+# @emotion/react
+# @emotion/styled
+# @mui/icons-material
+# @mui/material
+# axios
+# jwt-decode
+# react
+# react-dom
+# react-router-dom
+# (plus dev deps: @vitejs/plugin-react, typescript, eslint, vite, etc.)

@@ -124,8 +124,8 @@ axios.interceptors.response.use(
   }
 );
 
-// This initial setup should ideally be done within AuthProvider's useEffect
-// const initialAccessToken = getAccessToken();
-// if (initialAccessToken) {
-//   setAuthHeader(initialAccessToken);
-// }
+// Ensure axios carries the token on page reload before React mounts
+const initialAccessToken = getAccessToken();
+if (initialAccessToken) {
+  setAuthHeader(initialAccessToken);
+}
