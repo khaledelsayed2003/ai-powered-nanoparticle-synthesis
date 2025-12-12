@@ -1,10 +1,14 @@
 from django.db import models
+from django.contrib.auth import get_user_model # Import get_user_model
 
+User = get_user_model() # Get the currently active user model
 
 class MeanSizePrediction(models.Model):
     """
     Stores one uploaded SEM image and the corresponding predicted mean size (nm).
     """
+    # Link to the User model
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='predictions')
 
     # The uploaded SEM image file (saved in MEDIA_ROOT/sem_uploads/)
     image = models.ImageField(upload_to="sem_uploads/")
