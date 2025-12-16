@@ -1,5 +1,6 @@
-import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
+import React, { createContext, useState, useContext, useEffect, ReactNode, useCallback } from 'react';
 import { getPredictionHistory } from '../services/predictionService'; // Import getPredictionHistory
+import type { HistoryFilters } from '../services/predictionService'; // Import HistoryFilters as a type
 import { useAuth } from './AuthContext'; // Import useAuth to get isAuthenticated state
 import { useSnackbar } from './SnackbarContext'; // To show feedback
 
@@ -19,6 +20,8 @@ interface PredictionContextType {
   addPrediction: (prediction: PredictionResult) => void;
   loadingHistory: boolean; // New state for history loading
   clearPredictions: () => void; // New function to clear predictions on logout
+  filters: HistoryFilters;
+  setFilters: (filters: HistoryFilters) => void;
 }
 
 const PredictionContext = createContext<PredictionContextType | undefined>(undefined);
@@ -28,6 +31,7 @@ export const PredictionProvider: React.FC<{ children: ReactNode }> = ({ children
   const [error, setError] = useState<string | null>(null);
   const [predictions, setPredictions] = useState<PredictionResult[]>([]);
   const [loadingHistory, setLoadingHistory] = useState<boolean>(true); // Initially true
+  const [filters, setFilters] = useState<HistoryFilters>({});
 
   const { isAuthenticated } = useAuth(); // Get isAuthenticated from AuthContext
   const { showSnackbar } = useSnackbar();
@@ -40,31 +44,32 @@ export const PredictionProvider: React.FC<{ children: ReactNode }> = ({ children
   // Function to clear all predictions (e.g., on logout)
   const clearPredictions = () => {
     setPredictions([]);
+    setFilters({});
   };
+
+  const fetchHistory = useCallback(async () => {
+    if (isAuthenticated) {
+      setLoadingHistory(true);
+      try {
+        const history = await getPredictionHistory(filters);
+        setPredictions(history);
+      } catch (err: any) {
+        console.error('Failed to fetch prediction history:', err);
+        showSnackbar('Failed to load prediction history.', 'error');
+      } finally {
+        setLoadingHistory(false);
+      }
+    } else {
+      // Clear predictions if user is not authenticated
+      setPredictions([]);
+      setLoadingHistory(false); // No history to load if not authenticated
+    }
+  }, [isAuthenticated, showSnackbar, filters]);
 
   // Effect to fetch history when user authenticates or on mount
   useEffect(() => {
-    const fetchHistory = async () => {
-      if (isAuthenticated) {
-        setLoadingHistory(true);
-        try {
-          const history = await getPredictionHistory();
-          setPredictions(history);
-        } catch (err: any) {
-          console.error('Failed to fetch prediction history:', err);
-          showSnackbar('Failed to load prediction history.', 'error');
-        } finally {
-          setLoadingHistory(false);
-        }
-      } else {
-        // Clear predictions if user is not authenticated
-        setPredictions([]);
-        setLoadingHistory(false); // No history to load if not authenticated
-      }
-    };
-
     fetchHistory();
-  }, [isAuthenticated, showSnackbar]); // Re-run when authentication status changes
+  }, [fetchHistory]);
 
   return (
     <PredictionContext.Provider
@@ -77,6 +82,8 @@ export const PredictionProvider: React.FC<{ children: ReactNode }> = ({ children
         addPrediction,
         loadingHistory,
         clearPredictions,
+        filters,
+        setFilters,
       }}
     >
       {children}

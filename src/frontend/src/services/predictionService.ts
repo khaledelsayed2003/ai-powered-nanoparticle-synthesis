@@ -9,6 +9,13 @@ interface PredictionResult {
   image_url?: string; // Add this line
 }
 
+export interface HistoryFilters {
+  min_size?: number;
+  max_size?: number;
+  start_date?: string;
+  end_date?: string;
+}
+
 export const predictMeanSize = async (imageFile: File): Promise<PredictionResult> => {
   const formData = new FormData();
   formData.append('image', imageFile);
@@ -39,9 +46,20 @@ export const getPredictionImageUrl = (predictionId: number): string => {
   return `${API_BASE_URL}/images/${predictionId}/`;
 };
 
-export const getPredictionHistory = async (): Promise<PredictionResult[]> => {
+export const getPredictionHistory = async (filters?: HistoryFilters): Promise<PredictionResult[]> => {
   try {
-    const response = await axios.get<PredictionResult[]>(`${API_BASE_URL}/history/`);
+    const params = new URLSearchParams();
+    if (filters) {
+      for (const key in filters) {
+        const value = filters[key as keyof HistoryFilters];
+        if (value !== undefined && value !== null && value !== '') {
+          params.append(key, String(value));
+        }
+      }
+    }
+    const queryString = params.toString();
+    const url = `${API_BASE_URL}/history/${queryString ? `?${queryString}` : ''}`;
+    const response = await axios.get<PredictionResult[]>(url);
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

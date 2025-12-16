@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt', # Added for JWT authentication
     'corsheaders', # Added for CORS configuration
+    'django_filters',
 
     # Your apps
     'prediction',

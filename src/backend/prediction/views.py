@@ -115,9 +115,13 @@ class PredictionImageView(APIView):
         img_file = prediction.image.open()
         return FileResponse(img_file, content_type=f"image/{prediction.image.name.split('.')[-1]}")
 
+from django_filters.rest_framework import DjangoFilterBackend
+from .filters import MeanSizePredictionFilter
 class PredictionHistoryView(generics.ListAPIView):
     serializer_class = MeanSizePredictionSerializer
     permission_classes = [IsAuthenticated]
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = MeanSizePredictionFilter
 
     def get_queryset(self):
         # Filter predictions to only include those belonging to the authenticated user

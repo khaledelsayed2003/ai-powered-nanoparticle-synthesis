@@ -15,6 +15,8 @@ djangorestframework
 pillow   # Required for handling image uploads in Django
 djangorestframework-simplejwt # Added for token-based authentication
 django-cors-headers # Added for CORS configuration
+django-filter # Added for filtering
+
 
 # Optional utilities (safe to include)
 tqdm
