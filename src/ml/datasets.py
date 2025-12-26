@@ -20,7 +20,7 @@ def get_default_transforms(train: bool = True):
     ]
 
     if train:
-        # NOTE: You can add light augmentations here later, e.g.:
+        # NOTE: anyone clones our repo can add light augmentations here later, e.g.:
         # augmentations = [
         #     transforms.RandomHorizontalFlip(),
         #     transforms.RandomVerticalFlip(),

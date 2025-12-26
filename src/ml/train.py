@@ -9,9 +9,6 @@ from datasets import SemMeanSizeDataset, get_default_transforms
 from model import create_model
 
 
-# -----------------------------
-# Dataloaders (from Step 4)
-# -----------------------------
 def create_dataloaders(
     csv_path: Path = Path("data/raw/sem_mean_sizes.csv"),
     images_dir: Path = Path("data/raw/images"),
@@ -86,9 +83,8 @@ def create_dataloaders(
     return train_loader, val_loader, test_loader
 
 
-# -----------------------------
+
 # Training & Evaluation
-# -----------------------------
 def train_one_epoch(
     model: nn.Module,
     loader: DataLoader,
@@ -165,9 +161,8 @@ def evaluate(model: nn.Module, loader: DataLoader, device: torch.device):
     return {"mse": mse, "mae": mae, "rmse": rmse}
 
 
-# -----------------------------
+
 # Main training script
-# -----------------------------
 def main():
     project_root = Path(__file__).resolve().parents[2]
     csv_path = project_root / "data" / "raw" / "sem_mean_sizes.csv"
@@ -175,7 +170,7 @@ def main():
     models_dir = project_root / "models"
     models_dir.mkdir(parents=True, exist_ok=True)
 
-    # Hyperparameters (you can tune these)
+    # Hyperparameters (anyone who clones the repo can tune these)
     batch_size = 4
     num_epochs = 100
     learning_rate = 1e-3

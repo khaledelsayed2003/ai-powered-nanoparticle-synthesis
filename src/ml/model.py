@@ -15,7 +15,7 @@ class ConvBlock(nn.Module):
             in_channels,
             out_channels,
             kernel_size=3,
-            padding=1,    # keep H, W the same before pooling
+            padding=1,    # we will keep H, W the same before pooling
         )
         self.bn = nn.BatchNorm2d(out_channels)
         self.pool = nn.MaxPool2d(kernel_size=2, stride=2)
