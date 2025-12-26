@@ -8,9 +8,9 @@ from rest_framework.decorators import api_view, parser_classes, permission_class
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.views import APIView # Import APIView
+from rest_framework.views import APIView 
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework import generics # Import generics for ListAPIView
+from rest_framework import generics 
 
 # Django model
 from .models import MeanSizePrediction
@@ -62,9 +62,9 @@ def predict_mean_size_view(request):
             image=uploaded_file,                 # ImageField will store it under MEDIA_ROOT/sem_uploads/
             original_filename=uploaded_file.name,
             predicted_mean_size_nm=mean_size_nm,
-            # magnification="",  # fill later if you add a form field
+            # magnification="",  # fill later
             # notes="",
-            # model_version="v1",  # or whatever you decide
+            # model_version="v1", 
         )
 
     except Exception as e:

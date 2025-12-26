@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth import get_user_model # Import get_user_model
+from django.contrib.auth import get_user_model 
 
 User = get_user_model() # Get the currently active user model
 
@@ -13,17 +13,16 @@ class MeanSizePrediction(models.Model):
     # The uploaded SEM image file (saved in MEDIA_ROOT/sem_uploads/)
     image = models.ImageField(upload_to="sem_uploads/")
 
-    # Original filename from the upload (useful for tracking)
+    # Original filename from the upload
     original_filename = models.CharField(max_length=255)
 
     # Model output (mean size in nm)
     predicted_mean_size_nm = models.FloatField()
 
-    # Optional metadata – you can use later if you add fields in the form
     magnification = models.CharField(max_length=100, blank=True)
     notes = models.TextField(blank=True)
 
-    # For future: if you retrain or change model
+    # For future: if we decide to retrain or change model
     model_version = models.CharField(max_length=50, blank=True)
 
     # Auto timestamp when the prediction was created

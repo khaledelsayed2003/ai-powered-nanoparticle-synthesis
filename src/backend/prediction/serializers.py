@@ -2,7 +2,7 @@ from rest_framework import serializers
 from django.contrib.auth.models import User
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.contrib.auth import get_user_model
-from .models import MeanSizePrediction # Import MeanSizePrediction model
+from .models import MeanSizePrediction 
 
 
 class UserRegisterSerializer(serializers.ModelSerializer):
@@ -50,7 +50,6 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 
         data = super().validate(attrs)
 
-        # Add custom claims to the response, which will be included in the token payload
         data['username'] = self.user.username
         
         return data
