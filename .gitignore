@@ -1,6 +1,4 @@
-# -----------------------
 # Python / Virtual Env
-# -----------------------
 __pycache__/
 *.pyc
 *.pyo
@@ -18,27 +16,21 @@ venv/
 # VS Code
 .vscode/
 
-# -----------------------
+
 # Data (Large Files)
-# -----------------------
 data/raw/*
 data/processed/*
 !data/.gitkeep
 
-# Ignore all datasets EXCEPT gitkeep
-# (So the folder structure exists but files aren't committed)
 
-# -----------------------
+
 # Django
-# -----------------------
 *.sqlite3
 media/
 staticfiles/
 
-# -----------------------
+
 # Node / React (Frontend specific)
-# -----------------------
-# General node_modules and build outputs
 /src/frontend/node_modules/
 /src/frontend/dist/
 /src/frontend/build/
@@ -59,8 +51,7 @@ staticfiles/
 # Vite specific cache/output
 /src/frontend/.vite/
 
-# -----------------------
+
 # OS Specific
-# -----------------------
 .DS_Store
 Thumbs.db
