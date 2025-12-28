@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, useEffect, ReactNode, useCallback } from 'react';
+import React, { createContext, useState, useContext, useEffect, type ReactNode, useCallback } from 'react';
 import { getPredictionHistory } from '../services/predictionService'; // Import getPredictionHistory
 import type { HistoryFilters } from '../services/predictionService'; // Import HistoryFilters as a type
 import { useAuth } from './AuthContext'; // Import useAuth to get isAuthenticated state

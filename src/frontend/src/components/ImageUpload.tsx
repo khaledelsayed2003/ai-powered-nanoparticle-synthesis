@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, DragEvent } from 'react';
+import React, { useState, type ChangeEvent, type DragEvent } from 'react';
 import { Box, Button, Typography, Paper, Grid, IconButton } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff'; // Import for remove button

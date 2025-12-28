@@ -39,20 +39,23 @@ export const registerUser = async (userData: any): Promise<any> => {
 
 export const loginUser = async (credentials: any): Promise<AuthResponse> => {
   try {
-    const response = await axios.post<AuthTokens>(`${API_BASE_URL}/token/`, credentials);
-    const { access, refresh } = response.data;
+    const response = await axios.post<{ access: string; refresh: string; user: UserDetails }>(
+      `${API_BASE_URL}/token/`,
+      credentials
+    );
+    
+    const { access, refresh, user } = response.data;
 
     localStorage.setItem('access_token', access);
     localStorage.setItem('refresh_token', refresh);
     setAuthHeader(access); // Set header immediately after successful login
 
-    const decodedToken: DecodedToken = jwtDecode(access);
-    const user = { username: decodedToken.username || 'User' }; // Extract username from token
-
+    // The user object now comes directly from the backend response
     return { tokens: { access, refresh }, user };
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
-      throw new Error(JSON.stringify(error.response.data));
+      const errorDetail = error.response.data?.detail || JSON.stringify(error.response.data);
+      throw new Error(errorDetail);
     }
     throw new Error('An unknown error occurred during login.');
   }
@@ -82,17 +85,21 @@ export const setAuthHeader = (token: string | null) => {
 
 export const verifyAuthToken = async (token: string): Promise<UserDetails | null> => {
   try {
-    // Django Simple JWT's verify endpoint expects a 'token' field
+    // 1. Verify the token is still valid with the backend
     await axios.post(`${API_BASE_URL}/token/verify/`, { token });
-    setAuthHeader(token); // Set header if token is valid
-    const decodedToken: DecodedToken = jwtDecode(token);
-    return { username: decodedToken.username || 'User' };
+    setAuthHeader(token); // Set Authorization header for subsequent requests
+
+    // 2. If token is valid, fetch the current user's details from the new endpoint
+    const response = await axios.get<UserDetails>(`${API_BASE_URL}/user/`);
+    
+    return response.data; // This will be the full { id, username, email } object
   } catch (error) {
-    console.error('Token verification failed:', error);
-    logoutUser(); // Log out if token verification fails
+    console.error('Token verification or user fetch failed:', error);
+    logoutUser(); // If any step fails, log the user out
     return null;
   }
 };
+
 
 // Interceptor to handle token refresh automatically
 axios.interceptors.response.use(
