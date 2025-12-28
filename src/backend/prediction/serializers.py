@@ -2,8 +2,34 @@ from rest_framework import serializers
 from django.contrib.auth.models import User
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.contrib.auth import get_user_model
-from .models import MeanSizePrediction 
+from .models import MeanSizePrediction
+from django.contrib.auth.backends import ModelBackend
+from django.db.models import Q
 
+class EmailOrUsernameModelBackend(ModelBackend):
+    def authenticate(self, request, username=None, password=None, **kwargs):
+        UserModel = get_user_model()
+        try:
+            # Use __iexact for case-insensitive matching
+            user = UserModel.objects.get(Q(username__iexact=username) | Q(email__iexact=username))
+            if user.check_password(password):
+                return user
+        except UserModel.DoesNotExist:
+            # Return None if user not found
+            return None
+        return None
+
+    def get_user(self, user_id):
+        UserModel = get_user_model()
+        try:
+            return UserModel.objects.get(pk=user_id)
+        except UserModel.DoesNotExist:
+            return None
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email']
 
 class UserRegisterSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(style={'input_type': 'password'}, write_only=True)
@@ -28,29 +54,24 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         )
         return user
 
+
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
+        # Add custom claims
         token['username'] = user.username
         return token
 
     def validate(self, attrs):
-        User = get_user_model()
-        username = attrs.get(self.username_field)
-        
-        # Allow authentication with either username or email
-        try:
-            # Check if the provided 'username' is an email of an existing user
-            user = User.objects.get(email=username)
-            attrs[self.username_field] = user.username # Use the actual username for authentication
-        except User.DoesNotExist:
-            # If no user is found by email, proceed with the original 'username'
-            pass
-
+        # `super().validate()` will now use the `EmailOrUsernameModelBackend`
         data = super().validate(attrs)
 
-        data['username'] = self.user.username
+        # Add user info to the response
+        data['user'] = {
+            'username': self.user.username,
+            'email': self.user.email
+        }
         
         return data
 

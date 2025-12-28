@@ -14,7 +14,7 @@ from rest_framework import generics
 
 # Django model
 from .models import MeanSizePrediction
-from .serializers import UserRegisterSerializer, MeanSizePredictionSerializer # Import the serializer
+from .serializers import UserRegisterSerializer, MeanSizePredictionSerializer, UserSerializer
 
 # Small hack to import from src/ml
 import sys
@@ -25,6 +25,17 @@ if str(ML_DIR) not in sys.path:
     sys.path.append(str(ML_DIR))
 
 from infer import predict_mean_size  # type: ignore
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_current_user(request):
+    """
+    GET /api/user/
+    Returns the current authenticated user's details.
+    """
+    serializer = UserSerializer(request.user)
+    return Response(serializer.data)
 
 
 @api_view(["POST"])
