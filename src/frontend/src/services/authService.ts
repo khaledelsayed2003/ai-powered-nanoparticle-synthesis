@@ -100,6 +100,16 @@ export const verifyAuthToken = async (token: string): Promise<UserDetails | null
   }
 };
 
+export const getUserDetails = async (): Promise<UserDetails | null> => {
+  try {
+    const response = await axios.get<UserDetails>(`${API_BASE_URL}/user/`);
+    return response.data;
+  } catch (error) {
+    console.error('Failed to fetch user details:', error);
+    return null;
+  }
+};
+
 
 // Interceptor to handle token refresh automatically
 axios.interceptors.response.use(

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
-import { loginUser, logoutUser, setAuthHeader, getAccessToken, verifyAuthToken } from '../services/authService';
+import { loginUser, logoutUser, setAuthHeader, getAccessToken, verifyAuthToken, getUserDetails } from '../services/authService';
 import { useSnackbar } from './SnackbarContext'; // To show feedback
 
 interface AuthContextType {
@@ -49,9 +49,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const login = async (credentials: any) => {
     setLoading(true); // Start loading during login attempt
     try {
-      const { user: loggedInUser } = await loginUser(credentials);
+      await loginUser(credentials);
+      const userDetails = await getUserDetails(); // Fetch user details after login
       setIsAuthenticated(true);
-      setUser(loggedInUser);
+      setUser(userDetails); // Set the user details from the dedicated endpoint
       showSnackbar('Logged in successfully!', 'success');
     } catch (err: any) {
       showSnackbar(`Login failed: ${err.message}`, 'error');
