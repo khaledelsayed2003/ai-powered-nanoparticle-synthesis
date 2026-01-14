@@ -15,6 +15,7 @@ def get_default_transforms(train: bool = True):
     """
 
     base_transforms = [
+        transforms.Resize((480, 480)),      # Ensure image is 480x480
         transforms.ToTensor(),              # [0,1], shape: (1, H, W) for grayscale
         transforms.Normalize([0.5], [0.5])  # (x - 0.5) / 0.5 -> [-1,1]
     ]

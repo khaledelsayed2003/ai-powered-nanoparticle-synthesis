@@ -71,7 +71,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onImageSelect }) => {
   return (
     <Box sx={{ mt: 4, mb: 4 }}>
       <Typography variant="h4" component="h2" gutterBottom align="center">
-        Upload SEM Image for Prediction
+        Upload (SEM or TEM) Image for Prediction
       </Typography>
       <Paper elevation={3} sx={{ p: 4 }}>
         <Grid container spacing={3} direction="column" alignItems="center">

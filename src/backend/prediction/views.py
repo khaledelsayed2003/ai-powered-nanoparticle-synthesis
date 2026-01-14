@@ -78,6 +78,31 @@ def predict_mean_size_view(request):
             # model_version="v1", 
         )
 
+        # --- NEW: Append to CSV log ---
+        import csv
+        from datetime import datetime
+        
+        # Define path for the log file
+        csv_log_path = SRC_DIR.parent / "data" / "processed" / "predictions.csv"
+        csv_log_path.parent.mkdir(parents=True, exist_ok=True)
+        
+        # Check if file exists (to write header)
+        file_exists = csv_log_path.exists()
+        
+        with open(csv_log_path, mode="a", newline="", encoding="utf-8") as f:
+            writer = csv.writer(f)
+            if not file_exists:
+                writer.writerow(["timestamp", "user_id", "username", "filename", "predicted_mean_size_nm"])
+            
+            writer.writerow([
+                datetime.now().isoformat(),
+                request.user.id,
+                request.user.username,
+                uploaded_file.name,
+                f"{mean_size_nm:.4f}"
+            ])
+        # -------------------------------
+
     except Exception as e:
         # Clean up temp file, then return error
         temp_path.unlink(missing_ok=True)
@@ -87,10 +112,14 @@ def predict_mean_size_view(request):
     temp_path.unlink(missing_ok=True)
 
     # 3) Return response with prediction and DB id
+    # Calculate user prediction sequence number
+    user_prediction_id = MeanSizePrediction.objects.filter(user=request.user).count()
+
     return JsonResponse(
         {
             "predicted_mean_size_nm": mean_size_nm, # Changed key name here
             "id": prediction_obj.id,
+            "user_prediction_id": user_prediction_id,
             "created_at": prediction_obj.created_at.isoformat(),
             "image_url": request.build_absolute_uri(prediction_obj.image.url),
         },

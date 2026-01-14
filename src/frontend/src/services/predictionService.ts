@@ -5,6 +5,7 @@ const API_BASE_URL = 'http://localhost:8000/api'; // Assuming Django backend run
 interface PredictionResult {
   predicted_mean_size_nm: number; // Changed from mean_size_nm
   id: number;
+  user_prediction_id?: number; // Added user_prediction_id
   created_at: string;
   image_url?: string; // Add this line
 }

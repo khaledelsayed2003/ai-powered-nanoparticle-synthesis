@@ -176,8 +176,8 @@ const HistoryPage: React.FC = () => {
           ) : (
             <List>
               {predictions.map((prediction, index) => {
-                // Calculate user-specific ID, assuming predictions are sorted newest-first
-                const userSpecificId = predictions.length - index;
+                // Use user_prediction_id from the backend, fallback to id if not available (shouldn't happen with updated backend)
+                const displayId = prediction.user_prediction_id ?? prediction.id;
                 return (
                   <React.Fragment key={prediction.id}>
                     <ListItem alignItems="flex-start">
@@ -199,7 +199,7 @@ const HistoryPage: React.FC = () => {
                               variant="body2"
                               color="text.primary"
                             >
-                              ID: {userSpecificId}
+                              ID: {displayId}
                             </Typography>
                             {' — '}
                             {new Date(prediction.created_at).toLocaleString()}

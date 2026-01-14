@@ -7,6 +7,7 @@ import { useSnackbar } from './SnackbarContext'; // To show feedback
 interface PredictionResult {
   predicted_mean_size_nm: number; // Changed from mean_size_nm
   id: number;
+  user_prediction_id?: number;
   created_at: string;
   image_url?: string;
 }

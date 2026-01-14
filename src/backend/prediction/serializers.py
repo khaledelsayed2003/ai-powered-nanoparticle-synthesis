@@ -78,20 +78,25 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 class MeanSizePredictionSerializer(serializers.ModelSerializer):
     image_url = serializers.SerializerMethodField() # Add image_url field
+    user_prediction_id = serializers.SerializerMethodField()
 
     class Meta:
         model = MeanSizePrediction
         fields = [
             'id',
+            'user_prediction_id',
             'predicted_mean_size_nm', # Corrected field name
             'created_at',
             'image_url',
             'original_filename',
         ]
-        read_only_fields = ['id', 'created_at', 'image_url'] # These fields are read-only
+        read_only_fields = ['id', 'user_prediction_id', 'created_at', 'image_url'] # These fields are read-only
 
     def get_image_url(self, obj):
         request = self.context.get('request')
         if obj.image and request:
             return request.build_absolute_uri(obj.image.url)
         return None
+
+    def get_user_prediction_id(self, obj):
+        return MeanSizePrediction.objects.filter(user=obj.user, id__lte=obj.id).count()

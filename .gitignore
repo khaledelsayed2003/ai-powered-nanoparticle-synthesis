@@ -17,11 +17,6 @@ venv/
 .vscode/
 
 
-# Data (Large Files)
-data/raw/*
-data/processed/*
-!data/.gitkeep
-
 
 
 # Django

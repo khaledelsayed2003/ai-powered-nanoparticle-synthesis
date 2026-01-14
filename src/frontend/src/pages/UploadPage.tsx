@@ -8,6 +8,7 @@ import { useSnackbar } from '../context/SnackbarContext';
 interface PredictionResult {
   predicted_mean_size_nm: number; // Changed from mean_size_nm
   id: number;
+  user_prediction_id?: number;
   created_at: string;
 }
 
@@ -89,7 +90,7 @@ const UploadPage: React.FC = () => {
                     <strong>Predicted Mean Size:</strong> {currentPredictionResult.predicted_mean_size_nm.toFixed(2)} nm
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    Prediction ID: {currentPredictionResult.id}
+                    Prediction ID: {currentPredictionResult.user_prediction_id ?? currentPredictionResult.id}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
                     Timestamp: {new Date(currentPredictionResult.created_at).toLocaleString()}
